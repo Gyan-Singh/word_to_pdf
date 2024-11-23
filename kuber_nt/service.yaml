@@ -1,0 +1,17 @@
+
+apiVersion: v1
+kind: Service
+
+
+metadata:
+  name: word-to-pdf-service
+
+  
+spec:
+  type: LoadBalancer
+  selector:
+    app: word-to-pdf
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5000

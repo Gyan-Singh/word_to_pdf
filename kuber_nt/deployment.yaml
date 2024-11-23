@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+
+metadata:
+  name: word-to-pdf-deployment
+  labels:
+    app: word-to-pdf
+
+    
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: word-to-pdf
+  template:
+    metadata:
+      labels:
+        app: word-to-pdf
+    spec:
+      containers:
+      - name: word-to-pdf-container
+        image: gyan777/word_to_pdf:latest
+        ports:
+        - containerPort: 5000

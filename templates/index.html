@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word to PDF Converter</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif; /* Clean and modern font */
+            background: url('/static/images/bg.png') no-repeat center center fixed;
+            background-size: cover; /* Ensure the image covers the entire background */
+            color: #ffffff; /* Text color for contrast */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
+            min-height: 100vh; /* Full viewport height */
+            overflow: hidden; /* Hide any extra content outside the viewport */
+        }
+        
+        
+        
+    
+        .container {
+            max-width: 850px;
+            margin: auto;
+            padding: 60px 25px;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #4682B4;
+            font-size: 34px;
+            margin-bottom: 25px;
+        }
+    
+        .form-box {
+            background-color: #d9d9d9;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+            border: 1px solid #dcdcdc;
+        }
+    
+        .form-box label {
+            font-size: 15px;
+            color: #4682B4;
+            margin-bottom: 8px;
+            display: block;
+        }
+    
+        .form-box input[type="file"],
+        .form-box input[type="text"],
+        .form-box button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            font-size: 15px;
+        }
+    
+        .form-box button {
+            background-color: #4682B4;
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    
+        .form-box button:hover {
+            background-color: #ff66c4;
+        }
+    
+        .success-message {
+            background-color: #cdeccd;
+            color: #2d732d;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+            border: 1px solid #b6e3b6;
+        }
+    
+        .success-message a {
+            color: #2d732d;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    
+        .success-message a:hover {
+            text-decoration: underline;
+        }
+    
+        .error-message {
+            background-color: #f9d6d6;
+            color: #a72323;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+            border: 1px solid #f3b0b0;
+        }
+    
+        .file-info {
+            background-color: #cdeccd;
+            color: #2d732d;
+            padding: 10px;
+            margin-top: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    
+        .file-info p {
+            margin: 5px 0;
+        }
+    
+        .footer {
+            text-align: center;
+            margin-top: 35px;
+            font-size: 13px;
+            color: #666;
+        }
+    
+        .footer a {
+            color: #1E90FF;
+            text-decoration: none;
+        }
+    
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    
+        .image-display {
+            text-align: center;
+            margin-top: 35px;
+        }
+    
+        .image-display img {
+            width: 280px;
+            border-radius: 8px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Convert WORD to PDF</h1>
+    
+            {% if error %}
+                <div class="error-message">
+                    
+                    <p>{{ error }}</p>
+                </div>
+            {% endif %}
+    
+            <div class="form-box">
+                <form action="/upload" method="post" enctype="multipart/form-data">
+                    <label for="file">Select Word File to Upload:</label>
+                    <input type="file" name="file" id="file" required>
+    
+                    <label for="password">Set Password for PDF (Optional):</label>
+                    <input type="text" name="password" id="password" placeholder="Enter a password (optional)">
+    
+                    <button type="submit">Convert Now</button>
+                </form>
+            </div>
+    
+            {% if download_url %}
+                <div class="success-message">
+                    <p>Conversion successful! Your file is ready.</p>
+                    <p><a href="{{ download_url }}" target="_blank">Download PDF</a></p>
+                </div>
+    
+                <div class="file-info">
+                    <h3>Uploaded File Details:</h3>
+                    <p><strong>Name:</strong> {{ file_metadata.filename }}</p>
+                    <p><strong>Size:</strong> {{ file_metadata.size }} bytes</p>
+                    <p><strong>Upload Time:</strong> {{ file_metadata.upload_time }}</p>
+                </div>
+            {% endif %}
+        </div>
+    </body>
+    </html>
+    
